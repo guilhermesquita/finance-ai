@@ -15,8 +15,8 @@ const Transactions = async () => {
           className="rounded-full"
           // onClick={() => db.transaction.create({})}
         >
-          <ArrowDownUpIcon className="ml-2" />
-          Add Transaction
+          Adicionar Transação
+          <ArrowDownUpIcon className="ml-2 font-bold" />
         </Button>
       </div>
       <DataTable columns={transactionsColumns} data={transactions} />
