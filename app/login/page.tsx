@@ -15,15 +15,15 @@ const LoginPage = async () => {
     <div className="grid h-full grid-cols-2">
       <div className="mx-auto flex h-full max-w-[550px] flex-col justify-center p-8">
         <Image
-          src="logo.svg"
+          src="logo-main.svg"
           width={173}
           height={39}
-          alt="Finance AI"
+          alt="Flow AI"
           className="mb-8"
         />
         <h1 className="mb-3 text-4xl font-bold">Bem vindo</h1>
         <p className="mb-8 text-muted-foreground">
-          A Finance AI é uma plataforma de gestão financeira que utiliza IA para
+          A Flow AI é uma plataforma de gestão financeira que utiliza IA para
           monitorar suas movimentações, e oferecer insights personalizados,
           facilitando o controle do seu orçamento.
         </p>
