@@ -2,7 +2,7 @@ import React from "react";
 import { db } from "../_lib/prisma";
 import { DataTable } from "../_components/ui/data-table";
 import { transactionsColumns } from "./collumns";
-import AddTransactionButton from "../_components/add-transaciton-button";
+import AddTransactionButton from "../_components/add-transaction-button";
 
 const Transactions = async () => {
   const transactions = await db.transaction.findMany({});

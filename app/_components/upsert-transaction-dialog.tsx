@@ -1,6 +1,3 @@
-"use client";
-
-import { ArrowDownUpIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -10,7 +7,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  //   DialogTrigger,
 } from "./ui/dialog";
 import { z } from "zod";
 import {
@@ -43,8 +40,15 @@ import {
   TRANSACTION_TYPE_OPTIONS,
 } from "../_costants/transactions";
 import { DatePicker } from "./ui/data-picker";
-import addTransaction from "../_actions/add-transaction";
-import { useState } from "react";
+import { DialogTrigger } from "@radix-ui/react-dialog";
+import { upsertTransaction } from "../_actions/add-transaction";
+
+interface UpsertTransactionDialogProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  defaultValue?: FormSchema;
+  transactionId?: string;
+}
 
 const formSchema = z.object({
   name: z
@@ -73,12 +77,15 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
-const AddTransactionButton = () => {
-  const [dialogIsOpen, setDialogIsOpen] = useState(false);
-
+const UpsertTransactionDialog = ({
+  isOpen,
+  setIsOpen,
+  defaultValue,
+  transactionId,
+}: UpsertTransactionDialogProps) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
+    defaultValues: defaultValue ?? {
       amount: 0,
       date: new Date(),
       name: "",
@@ -90,33 +97,32 @@ const AddTransactionButton = () => {
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      await addTransaction(data);
-      setDialogIsOpen(false);
+      await upsertTransaction({ ...data, id: transactionId });
+      setIsOpen(false);
       form.reset();
     } catch (error) {
       console.error(error);
     }
   };
 
+  const isUpdate = Boolean(transactionId);
+
   return (
     <Dialog
-      open={dialogIsOpen}
+      open={isOpen}
       onOpenChange={(open) => {
-        setDialogIsOpen(open);
+        setIsOpen(open);
         if (!open) {
           form.reset();
         }
       }}
     >
-      <DialogTrigger asChild>
-        <Button className="rounded-full font-bold">
-          Adicionar Transação
-          <ArrowDownUpIcon className="ml-2 font-bold" />
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger asChild></DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Adicionar Transação</DialogTitle>
+          <DialogTitle>
+            {isUpdate ? "Atualizar" : "Adicionar"} Transação
+          </DialogTitle>
           <DialogDescription>Insira as informações abaixo</DialogDescription>
         </DialogHeader>
 
@@ -269,4 +275,4 @@ const AddTransactionButton = () => {
   );
 };
 
-export default AddTransactionButton;
+export default UpsertTransactionDialog;
