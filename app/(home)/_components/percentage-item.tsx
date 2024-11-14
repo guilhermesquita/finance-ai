@@ -11,7 +11,7 @@ const PercentageItem = ({ title, value, icon }: PercentageItemProps) => {
     <div className="flex items-center justify-between">
       {/* icone */}
       <div className="flex items-center gap-2">
-        {icon}
+        <div className="rounded-lg bg-white bg-opacity-[3%] p-2">{icon}</div>
         <p className="text-sm text-muted-foreground">{title}</p>
       </div>
       {/* Porcentagem */}
