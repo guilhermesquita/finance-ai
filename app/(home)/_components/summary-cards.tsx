@@ -1,43 +1,55 @@
-import { PiggyBankIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
+import {
+  PiggyBankIcon,
+  TrendingDownIcon,
+  TrendingUpIcon,
+  WalletIcon,
+} from "lucide-react";
 import SummaryCard from "./summary-card";
 
-interface SummaryCardsProps {
+interface SummaryCards {
+  month: string;
   balance: number;
-  investmentsTotal: number;
   depositsTotal: number;
+  investmentsTotal: number;
   expensesTotal: number;
+  userCanAddTransaction?: boolean;
 }
 
 const SummaryCards = async ({
   balance,
-  investmentsTotal,
   depositsTotal,
   expensesTotal,
-}: SummaryCardsProps) => {
+  investmentsTotal,
+  userCanAddTransaction,
+}: SummaryCards) => {
   return (
     <div className="space-y-6">
+      {/* PRIMEIRO CARD */}
+
       <SummaryCard
-        ammount={balance}
-        title={"Saldo"}
+        icon={<WalletIcon size={16} />}
+        title="Saldo"
+        amount={balance}
         size="large"
-        icon={<PiggyBankIcon size={16} />}
+        userCanAddTransaction={userCanAddTransaction}
       />
 
+      {/* OUTROS CARDS */}
       <div className="grid grid-cols-3 gap-6">
         <SummaryCard
-          ammount={investmentsTotal}
-          title={"Investido"}
-          icon={<PiggyBankIcon size={14} />}
+          icon={<PiggyBankIcon size={16} />}
+          title="Investido"
+          amount={investmentsTotal}
         />
         <SummaryCard
-          ammount={depositsTotal}
-          title={"Receita"}
-          icon={<TrendingUpIcon size={14} />}
+          icon={<TrendingUpIcon size={16} className="text-primary" />}
+          title="Receita"
+          amount={depositsTotal}
         />
         <SummaryCard
-          ammount={expensesTotal}
-          title={"Despesas"}
-          icon={<TrendingDownIcon size={14} />}
+          icon={<TrendingDownIcon size={16} className="text-red-500" />}
+          title="Despesas"
+          amount={expensesTotal}
         />
       </div>
     </div>
